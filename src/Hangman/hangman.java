@@ -7,13 +7,31 @@ public class hangman {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String[] words = {"python", "java", "javascript", "kotlin"};
+        boolean keepPlaying = true;
+
+        while (keepPlaying) {
+            System.out.println("HANGMAN");
+            System.out.println("Type 'play' to play the game, 'exit' to quit:");
+            String command = scanner.nextLine();
+
+            if (command.equals("play")) {
+                playGame(words, scanner);
+            } else if (command.equals("exit")) {
+                keepPlaying = false;
+            } else {
+                System.out.println("Invalid command. Please type 'play' or 'exit'.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    public static void playGame(String[] words, Scanner scanner) {
         String chosenWord = words[new Random().nextInt(words.length)];
         StringBuilder displayWord = new StringBuilder("-".repeat(chosenWord.length()));
         HashSet<Character> guessedLetters = new HashSet<>();
         int mistakes = 0;
         int maxMistakes = 8;
-
-        System.out.println("HANGMAN");
 
         while (mistakes < maxMistakes && displayWord.toString().contains("-")) {
             System.out.println("Current word: " + displayWord);
@@ -51,8 +69,6 @@ public class hangman {
         } else {
             System.out.println("You lost! The word was " + chosenWord + ".");
         }
-
-        scanner.close();
     }
 }
 
