@@ -8,11 +8,12 @@ public class hangman {
         String[] words = {"python", "java", "javascript", "kotlin"};
         String chosenWord = words[new Random().nextInt(words.length)];
         StringBuilder displayWord = new StringBuilder("-".repeat(chosenWord.length()));
-        int attempts = 8;
+        int mistakes = 0;
+        int maxMistakes = 8;
 
         System.out.println("HANGMAN");
 
-        while (attempts > 0 && displayWord.toString().contains("-")) {
+        while (mistakes < maxMistakes && displayWord.toString().contains("-")) {
             System.out.println("Current word: " + displayWord);
             System.out.println("Input a letter: > ");
             char letter = scanner.nextLine().charAt(0);
@@ -25,7 +26,7 @@ public class hangman {
                 }
             } else {
                 System.out.println("That letter doesn't appear in the word.");
-                attempts--;
+                mistakes++;
             }
         }
 
@@ -37,5 +38,6 @@ public class hangman {
 
         scanner.close();
     }
+
 }
 
