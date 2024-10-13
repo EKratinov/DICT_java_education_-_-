@@ -1,6 +1,7 @@
 package Hangman;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.HashSet;
 
 public class hangman {
     public static void main(String[] args) {
@@ -8,6 +9,7 @@ public class hangman {
         String[] words = {"python", "java", "javascript", "kotlin"};
         String chosenWord = words[new Random().nextInt(words.length)];
         StringBuilder displayWord = new StringBuilder("-".repeat(chosenWord.length()));
+        HashSet<Character> guessedLetters = new HashSet<>();
         int mistakes = 0;
         int maxMistakes = 8;
 
@@ -16,7 +18,21 @@ public class hangman {
         while (mistakes < maxMistakes && displayWord.toString().contains("-")) {
             System.out.println("Current word: " + displayWord);
             System.out.println("Input a letter: > ");
-            char letter = scanner.nextLine().charAt(0);
+            String input = scanner.nextLine();
+
+            if (input.length() != 1 || !Character.isLowerCase(input.charAt(0))) {
+                System.out.println("Please enter a lowercase English letter.");
+                continue;
+            }
+
+            char letter = input.charAt(0);
+
+            if (guessedLetters.contains(letter)) {
+                System.out.println("You've already guessed this letter.");
+                continue;
+            }
+
+            guessedLetters.add(letter);
 
             if (chosenWord.indexOf(letter) >= 0) {
                 for (int i = 0; i < chosenWord.length(); i++) {
@@ -38,6 +54,5 @@ public class hangman {
 
         scanner.close();
     }
-
 }
 
