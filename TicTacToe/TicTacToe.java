@@ -3,17 +3,24 @@ import java.util.Scanner;
 public class TicTacToe {
     private static char[][] board = new char[3][3];
 
-
     public static void main(String[] args) {
         initializeBoard();
         printBoard();
 
+        char currentPlayer = 'X';
         while (true) {
-            playerMove('X');
+            playerMove(currentPlayer);
             printBoard();
+            String result = analyzeBoard();
+
+            if (!result.equals("Game not finished")) {
+                System.out.println(result);
+                break;
+            }
+
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         }
     }
-
 
     public static void initializeBoard() {
         for (int i = 0; i < 3; i++) {
@@ -23,13 +30,11 @@ public class TicTacToe {
         }
     }
 
-
     public static void updateBoard(String input) {
         for (int i = 0; i < 9; i++) {
             board[i / 3][i % 3] = input.charAt(i) == '_' ? ' ' : input.charAt(i);
         }
     }
-
 
     public static void printBoard() {
         System.out.println("---------");
@@ -43,6 +48,42 @@ public class TicTacToe {
         System.out.println("---------");
     }
 
+    public static String analyzeBoard() {
+        boolean xWins = checkWin('X');
+        boolean oWins = checkWin('O');
+        int xCount = 0, oCount = 0, emptyCount = 0;
+
+        for (char[] row : board) {
+            for (char cell : row) {
+                if (cell == 'X') xCount++;
+                else if (cell == 'O') oCount++;
+                else emptyCount++;
+            }
+        }
+
+        if (xWins && oWins || Math.abs(xCount - oCount) > 1) {
+            return "Impossible";
+        } else if (xWins) {
+            return "X wins";
+        } else if (oWins) {
+            return "O wins";
+        } else if (emptyCount == 0) {
+            return "Draw";
+        } else {
+            return "Game not finished";
+        }
+    }
+
+    public static boolean checkWin(char symbol) {
+        for (int i = 0; i < 3; i++) {
+            if ((board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) ||
+                    (board[0][i] == symbol && board[1][i] == symbol && board[2][i] == symbol)) {
+                return true;
+            }
+        }
+        return (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) ||
+                (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol);
+    }
 
     public static void playerMove(char symbol) {
         Scanner scanner = new Scanner(System.in);
