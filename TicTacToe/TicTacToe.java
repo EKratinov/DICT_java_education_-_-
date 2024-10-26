@@ -1,9 +1,7 @@
+import java.util.Scanner;
+
 public class TicTacToe {
-    private static char[][] board = {
-            {' ', ' ', ' '},
-            {' ', ' ', ' '},
-            {' ', ' ', ' '}
-    };
+    private static char[][] board = new char[3][3];
 
     public static void printBoard() {
         System.out.println("---------");
@@ -18,6 +16,12 @@ public class TicTacToe {
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter cells: ");
+        String input = scanner.nextLine();
+        for (int i = 0; i < 9; i++) {
+            board[i / 3][i % 3] = input.charAt(i);
+        }
         printBoard();
     }
 }
