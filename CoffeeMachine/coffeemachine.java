@@ -11,8 +11,9 @@ public class coffeemachine {
     public static void main(String[] args) {
         boolean running = true;
 
+        // Цикл для повторного выполнения команд
         while (running) {
-            System.out.println("Write action (buy, fill, take, exit):");
+            System.out.println("Write action (buy, fill, take, remaining, exit):");
             String action = scanner.next();
 
             switch (action) {
@@ -24,6 +25,9 @@ public class coffeemachine {
                     break;
                 case "take":
                     take();
+                    break;
+                case "remaining":
+                    printRemaining();
                     break;
                 case "exit":
                     running = false;
@@ -40,7 +44,7 @@ public class coffeemachine {
         String choice = scanner.next();
 
         if (choice.equals("back")) {
-            return;
+            return; // Возврат к выбору действия
         }
 
         int waterNeeded = 0, milkNeeded = 0, coffeeNeeded = 0, cost = 0;
@@ -99,6 +103,15 @@ public class coffeemachine {
         money = 0;
     }
 
+    private static void printRemaining() {
+        System.out.println("The coffee machine has:");
+        System.out.println(water + " ml of water");
+        System.out.println(milk + " ml of milk");
+        System.out.println(coffeeBeans + " g of coffee beans");
+        System.out.println(disposableCups + " disposable cups");
+        System.out.println(money + " of money");
+    }
+
     private static boolean checkResources(int waterNeeded, int milkNeeded, int coffeeNeeded) {
         if (water < waterNeeded) {
             System.out.println("Sorry, not enough water!");
@@ -119,3 +132,4 @@ public class coffeemachine {
         return true;
     }
 }
+
