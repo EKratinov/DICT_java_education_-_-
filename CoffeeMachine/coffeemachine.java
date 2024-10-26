@@ -5,17 +5,36 @@ public class coffeemachine {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Write how many ml of water the coffee machine has:");
+        int water = scanner.nextInt();
+
+        System.out.println("Write how many ml of milk the coffee machine has:");
+        int milk = scanner.nextInt();
+
+        System.out.println("Write how many grams of coffee beans the coffee machine has:");
+        int coffeeBeans = scanner.nextInt();
+
         System.out.println("Write how many cups of coffee you will need:");
         int cups = scanner.nextInt();
 
-        int water = cups * 200; // 200 мл воды на чашку
-        int milk = cups * 50;   // 50 мл молока на чашку
-        int coffeeBeans = cups * 15; // 15 г кофе на чашку
+        int waterNeeded = cups * 200;
+        int milkNeeded = cups * 50;
+        int coffeeBeansNeeded = cups * 15;
 
-        System.out.println("For " + cups + " cups of coffee you will need:");
-        System.out.println(water + " ml of water");
-        System.out.println(milk + " ml of milk");
-        System.out.println(coffeeBeans + " g of coffee beans");
+        int possibleCups = Math.min(Math.min(water / 200, milk / 50), coffeeBeans / 15);
+
+        if (possibleCups >= cups) {
+            int extraCups = possibleCups - cups;
+            if (extraCups > 0) {
+                System.out.println("Yes, I can make that amount of coffee (and even " + extraCups + " more than that)");
+            } else {
+                System.out.println("Yes, I can make that amount of coffee");
+            }
+        } else {
+            System.out.println("No, I can make only " + possibleCups + " cups of coffee");
+        }
     }
+
+
 }
 
